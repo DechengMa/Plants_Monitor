@@ -1,0 +1,17 @@
+{
+  "name": "fit5140-assignment3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "UploadImage.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/storage": "^2.1.0",
+    "file-api": "^0.10.4",
+    "xmlhttprequest": "^1.8.0"
+  }
+}
