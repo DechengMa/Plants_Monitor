@@ -12,7 +12,7 @@ function getFormattedTime(){
 	
 function takePhoto(){	
 	var time = getFormattedTime();
-	var filepath = `/home/pi/Documents/FIT5140-Assignment3/Plants_${time}.jpg`
+	var filepath = `/home/pi/Documents/home/pi/Documents/PlantsImage/Plants_${time}.jpg`
 	const myCamera = new PiCamera(
 		{	mode: 'photo',
 			output: filepath,
@@ -30,7 +30,6 @@ function takePhoto(){
 							console.log("Error happened!"+error)
 								})
 	}
-takePhoto()
 
 function uploadImage(filepath){
 	var fs = require('fs');
