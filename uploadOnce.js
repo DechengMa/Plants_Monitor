@@ -24,9 +24,11 @@ firebase.auth().signInWithEmailAndPassword("chinadecheng@gmail.com", "123456")
         console.log("Firebase Connected");
         firebaseDatabase = firebase.database();
         databaseRef = firebaseDatabase.ref("raspio");
-        setInterval(function() { getMoisture() ;
-								takePhoto();
-						}, 1800000);
+        getMoisture();
+        console.log("Upload moisture succeed");
+		takePhoto();
+		console.log("Upload Photo succeed!")
+		
 		});
 
 var ads1x15 = require('node-ads1x15');  
@@ -70,7 +72,6 @@ function getMoisture(){
 }
 
 
-//This file is to activate the camera, take a photo and upload that photo to firebase
 //This file is to activate the camera, take a photo and upload that photo to firebase
 
 const PiCamera = require('pi-camera');

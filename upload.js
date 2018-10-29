@@ -1,3 +1,5 @@
+//This file is to activate the camera, take a photo and upload that photo to firebase
+
 const PiCamera = require('pi-camera');
 
 function getFormattedTime(){
@@ -8,28 +10,31 @@ function getFormattedTime(){
 		var mi = today.getMinutes();
 		var s = today.getSeconds();
 		return h+"."+mi+"_"+d+"-"+m
-	}
+}
 	
-function takePhoto(){	
+function takePhoto(){
 	var time = getFormattedTime();
-	var filepath = `/home/pi/Documents/home/pi/Documents/PlantsImage/Plants_${time}.jpg`
+	var filepath = `/home/pi/Documents/PlantsImage/Plants_${time}.jpg`
 	const myCamera = new PiCamera(
 		{	mode: 'photo',
 			output: filepath,
-			width:1024,
-			height:768,
+			width:1920,
+			height:1080,
 			nopreview:true,
 		}
 	);
-
+	
 	myCamera.snap().then(
-						(result) =>{ 
-							console.log("picture was saved");
-							uploadImage(filepath);}
-						).catch((error) => {
-							console.log("Error happened!"+error)
-								})
-	}
+					(result) =>{ 
+						console.log("picture was saved");
+						uploadImage(filepath);
+						
+						}
+					).catch((error) => {
+						console.log("Error happened!"+error)
+							})
+	
+}
 
 function uploadImage(filepath){
 	var fs = require('fs');
