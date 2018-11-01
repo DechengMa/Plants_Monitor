@@ -24,9 +24,14 @@ firebase.auth().signInWithEmailAndPassword("chinadecheng@gmail.com", "123456")
         console.log("Firebase Connected");
         firebaseDatabase = firebase.database();
         databaseRef = firebaseDatabase.ref("raspio");
-        setInterval(function() { getMoisture() ;
-								takePhoto();
-						}, 1800000);
+        console.log("System start");
+        setInterval(function() 
+					{ 
+						getMoisture() ;
+						takePhoto();
+					}, 86400000      
+					   //24 hours 
+				   );
 		});
 
 var ads1x15 = require('node-ads1x15');  
@@ -36,8 +41,8 @@ var chip = 1; //0 for ads1015, 1 for ads1115
 var adc = new ads1x15(chip); 
 
 var channel = 0; //channel 0, 1, 2, or 3...  
-var samplesPerSecond = '250'; // see index.js for allowed values for your chip  
-var progGainAmp = '4096'; // see index.js for allowed values for your chip  
+var samplesPerSecond = '250'; 
+var progGainAmp = '4096'; 
 
 //somewhere to store our reading   
 var reading  = 0;   
@@ -49,11 +54,12 @@ function getMoisture(){
 			if(err)  
 			{  
 			  //logging / troubleshooting code goes here...  
+			  console.log(err);
 			  throw err;  
 			}  
-			// if you made it here, then the data object contains your reading!  
 			reading = data;  
 			console.log(reading);
+			//upload moisture data to fire base
 			if(reading != null)
 			{
 				var newNode = databaseRef.push();
@@ -64,15 +70,14 @@ function getMoisture(){
 			}else
 				console.log("Waiting sensor to get data")
 		 }
-	   );  
-		 
-	} 
+	   );  	 
+	}else{
+		console.log("adc module is busy")
+	}
 }
 
 
-//This file is to activate the camera, take a photo and upload that photo to firebase
-//This file is to activate the camera, take a photo and upload that photo to firebase
-
+//This code below is to activate the camera, take a photo and upload that photo to firebase
 const PiCamera = require('pi-camera');
 
 function getFormattedTime(){
@@ -85,6 +90,7 @@ function getFormattedTime(){
 		return h+"."+mi+"_"+d+"-"+m
 }
 	
+//this method is to take photo and then upload photo to firebase storage by call the method uploadImage()
 function takePhoto(){
 	var time = getFormattedTime();
 	var filepath = `/home/pi/Documents/PlantsImage/Plants_${time}.jpg`
